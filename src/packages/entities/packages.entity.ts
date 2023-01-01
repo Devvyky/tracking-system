@@ -26,27 +26,26 @@ export class History {
   })
   description: string;
 
-  createdAt: Date;
-  updatedAt: Date;
+  @Prop({
+    required: false,
+  })
+  createdAt?: Date;
 }
 
 @Schema({ _id: false })
 export class Sender {
   @Prop({
     lowercase: true,
-    required: true,
   })
   name: string;
 
   @Prop({
     lowercase: true,
-    required: true,
     validate: [isEmail, 'Invalid Email'],
   })
   email: string;
 
   @Prop({
-    required: true,
     validate: [isPhoneNumber, 'Invalid Phone Number'],
   })
   phone: string;
@@ -56,19 +55,16 @@ export class Sender {
 export class Receiver {
   @Prop({
     lowercase: true,
-    required: true,
   })
   name: string;
 
   @Prop({
     lowercase: true,
-    required: true,
     validate: [isEmail, 'Invalid Email'],
   })
   email: string;
 
   @Prop({
-    required: true,
     validate: [isPhoneNumber, 'Invalid Phone Number'],
   })
   phone: string;
@@ -76,6 +72,9 @@ export class Receiver {
 
 @Schema()
 export class Package extends Document {
+  @Prop()
+  trackingId: string;
+
   @Prop({
     type: Sender,
     required: true,

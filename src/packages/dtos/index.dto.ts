@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { Type } from 'class-transformer';
 import { IsString, ValidateNested } from 'class-validator';
+import { HistoryStatus } from '../entities/packages.entity';
 
 export class ReceiverDTO {
   @IsString()
@@ -40,4 +41,14 @@ export class CreatePackageDTO {
   description: string;
 }
 
-export class UpdatePackageDTO extends PartialType(CreatePackageDTO) {}
+export class HistoryDTO {
+  @IsString()
+  status: HistoryStatus;
+
+  @IsString()
+  description: string;
+}
+
+export class UpdatePackageDTO extends PartialType(CreatePackageDTO) {
+  history?: [HistoryDTO];
+}
