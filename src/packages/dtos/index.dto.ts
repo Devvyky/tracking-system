@@ -1,6 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { OmitType, PartialType } from '@nestjs/mapped-types';
 import { Type } from 'class-transformer';
-import { IsString, ValidateNested } from 'class-validator';
+import { IsOptional, IsString, ValidateNested } from 'class-validator';
+
 import { HistoryStatus } from '../entities/packages.entity';
 
 export class ReceiverDTO {
@@ -24,7 +25,13 @@ export class SenderDTO {
   @IsString()
   phone: string;
 }
+export class HistoryDTO {
+  @IsString()
+  status: HistoryStatus;
 
+  @IsString()
+  description: string;
+}
 export class CreatePackageDTO {
   @ValidateNested()
   @Type(() => SenderDTO)
@@ -39,16 +46,13 @@ export class CreatePackageDTO {
 
   @IsString()
   description: string;
+
+  @IsOptional()
+  history?: HistoryDTO;
 }
 
-export class HistoryDTO {
-  @IsString()
-  status: HistoryStatus;
+export class UpdatePackageDTO extends PartialType(CreatePackageDTO) {}
 
-  @IsString()
-  description: string;
-}
-
-export class UpdatePackageDTO extends PartialType(CreatePackageDTO) {
-  history?: [HistoryDTO];
-}
+// export class UpdatePackageDTO extends PartialType(
+//   OmitType(CreatePackageDTO, ['history'] as const),
+// ) {}

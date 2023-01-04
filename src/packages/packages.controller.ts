@@ -42,10 +42,11 @@ export class PackagesController {
   async createPackage(
     @Req() req: Request,
     @Res() res: Response,
-    @Body() createPackageDTO: CreatePackageDTO,
+    @Body() payload: CreatePackageDTO,
   ): Promise<void> {
     try {
-      const data = await this.packagesService.create(createPackageDTO);
+      console.log(payload);
+      const data = await this.packagesService.create(payload);
       res.status(201).json({
         status: 'success',
         message: 'Create New Package Successful!',
@@ -84,10 +85,10 @@ export class PackagesController {
     @Req() req: Request,
     @Res() res: Response,
     @Param('id') id: string,
-    @Body() updatePackageDTO: UpdatePackageDTO,
+    @Body() payload: UpdatePackageDTO,
   ): Promise<void> {
     try {
-      const data = await this.packagesService.update(id, updatePackageDTO);
+      const data = await this.packagesService.update(id, payload);
       res.status(200).json({
         status: 'success',
         message: 'Update Package Successful!',
