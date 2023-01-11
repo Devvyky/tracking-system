@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Admin } from 'src/admin/entities/admin.entity';
+import { SignUpDTO } from './dtos/index.dtos';
 
 @Injectable()
 export class AuthService {
@@ -10,7 +11,7 @@ export class AuthService {
     private readonly adminModel: Model<Admin>,
   ) {}
 
-  async signup(payload: { email: string; password: string }): Promise<Admin> {
+  async signup(payload: SignUpDTO): Promise<Admin> {
     return this.adminModel.create({
       ...payload,
     });

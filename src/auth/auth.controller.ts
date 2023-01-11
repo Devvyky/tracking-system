@@ -1,6 +1,7 @@
 import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
+import { SignUpDTO } from './dtos/index.dtos';
 
 @Controller('auth')
 export class AuthController {
@@ -11,10 +12,7 @@ export class AuthController {
     @Req() req: Request,
     @Res() res: Response,
     @Body()
-    payload: {
-      email: string;
-      password: string;
-    },
+    payload: SignUpDTO,
   ): Promise<any> {
     try {
       const data = await this.authService.signup(payload);
